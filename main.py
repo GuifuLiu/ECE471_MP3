@@ -17,8 +17,18 @@ def test_env(env, function_name):
     - Print the received current state (ignore the reward for now)
     [Task 1.1] Hint: Check out serverless_env.py
     """
-    # [Your Code]
-    pass
+
+    # Perform one RL step by providing a vertical scaling-up action
+    curr_state, curr_reward, done = env.step(function_name=function_name, action={'vertical': 128, 'horizontal': 0})
+
+    # Print the received current state
+    print(curr_state)
+
+    # Perform one RL step by providing a horizontal scaling-out action
+    curr_state, curr_reward, done = env.step(function_name=function_name, action={'vertical': 0, 'horizontal': 1})
+
+    # Print the received current state
+    print(curr_state)
 
 
 def generate_traces(env, function_name):
@@ -30,13 +40,23 @@ def generate_traces(env, function_name):
                'vertical_scaling,horizontal_action,reward\n')
 
     for i in range(num_steps):
-        # [Task 1.2] TODO: write your code here to generate a vertical or horizontal scaling action at each step
-        # [Task 1.2] TODO: write your code here to apply the action and get the response
-        # [Task 1.2] Hint: Check out the step() function in serverless_env.py
-        # [Your Code]
+
+        # Create random action policy for vertical or horizontal scaling
+        decrease = -1 if random.choice([True, False]) else 1
+
+        if random.choice([True, False]):
+          random_policy = {'vertical': 128 * decrease, 'horizontal': 0}
+        else:
+          random_policy = {'vertical': 0, 'horizontal': 1 * decrease}
+
+        # Performing the RL step
+        next_state, reward, done = env.step(function_name=function_name, action=random_policy)
+
+        # Printing utilization and SLO preservation
+        print('CPU Utilization: %f, SLO Preservation: %f' % (state[0], state[1]))
 
         # print to file
-        file.write(','.join([str(j) for j in state]) + ',' + str(vertical_action) + ',' + str(horizontal_action) +
+        file.write(','.join([str(j) for j in state]) + ',' + str(random_policy['vertical']) + ',' + str(random_policy['horizontal']) +
                    ',' + str(reward) + '\n')
         state = next_state
 
@@ -99,10 +119,12 @@ def main():
     - Reset the environment and print the initial state
     """
     # create and initialize the environment for rl training
-    # [Task 1.1] TODO: Write your code here to create an RL environment `env` (and get the `function_name` from `env`)
-    # [Task 1.1] TODO: Write your code here to reset the environment and print the initial state
-    # [Task 1.1] Hint: Check out serverless_env.py
-    # [Your Code]
+    env = SimEnvironment()
+    function_name = env.get_function_name()
+
+    # Reset the environment and print the initial state
+    initial_state = env.reset(function_name=function_name)
+    print(initial_state)
 
     """
     Task 1.1 (Part II)
