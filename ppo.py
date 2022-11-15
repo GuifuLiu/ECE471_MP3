@@ -36,12 +36,22 @@ class ActorNetwork(nn.Module):
         super(ActorNetwork, self).__init__()
         # [Task 2.3] TODO: Write your code here to implement the type of layers that you will need in forward()
         # [Your Code]
+
+        input_layer = nn.Linear(input_size, HIDDEN_SIZE)
+        hidden_layer = nn.Linear(HIDDEN_SIZE, hidden_size)
+        output_layer = nn.Linear(hidden_size, output_size)
+        function = nn.ReLU()
+        output_function = nn.Softmax()
+
+        self.neural_net = nn.Sequential(input_layer, function, hidden_layer, function, output_layer, output_function)
+
         pass
 
     def forward(self, input_):
         output = None
         # [Task 2.3] TODO: Write your code here to implement the forward pass of the actor network
         # [Your Code]
+        output = self.neural_net(torch.FloatTensor(input_))
         return output
 
 
@@ -50,12 +60,20 @@ class CriticNetwork(nn.Module):
         super(CriticNetwork, self).__init__()
         # [Task 2.3] TODO: Write your code here to implement the type of layers that you will need in forward()
         # [Your Code]
+        input_layer = nn.Linear(input_size, HIDDEN_SIZE)
+        hidden_layer = nn.Linear(HIDDEN_SIZE, hidden_size)
+        output_layer = nn.Linear(hidden_size, output_size)
+        function = nn.ReLU()
+        output_function = nn.Softmax()
+
+        self.neural_net = nn.Sequential(input_layer, function, hidden_layer, function, output_layer, output_function)
         pass
 
     def forward(self, input_):
         output = None
         # [Task 2.3] TODO: Write your code here to implement the forward pass of the critic network
         # [Your Code]
+        output = self.neural_net(torch.FloatTensor(input_))
         return output
 
 
@@ -261,6 +279,7 @@ class PPO:
 
                     # [Task 2.3] TODO: Given loss, write you code here to update model parameters (backward propagation)
                     # [Your Code]
+                    loss.backward()
 
                 if self.parameter_actor is None:
                     self.parameter_actor = []
