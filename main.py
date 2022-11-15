@@ -6,6 +6,7 @@ from dqn import dqn
 from util import convert_state_action_to_reward
 from util import convert_state_action_to_reward_overprovisioning
 from util import convert_state_action_to_reward_tightpacking
+from util import print_state
 
 
 def test_env(env, function_name):
@@ -22,13 +23,13 @@ def test_env(env, function_name):
     curr_state, curr_reward, done = env.step(function_name=function_name, action={'vertical': 128, 'horizontal': 0})
 
     # Print the received current state
-    print(curr_state)
+    print_state(curr_state)
 
     # Perform one RL step by providing a horizontal scaling-out action
     curr_state, curr_reward, done = env.step(function_name=function_name, action={'vertical': 0, 'horizontal': 1})
 
     # Print the received current state
-    print(curr_state)
+    print_state(curr_state)
 
 
 def generate_traces(env, function_name):
@@ -124,7 +125,7 @@ def main():
 
     # Reset the environment and print the initial state
     initial_state = env.reset(function_name=function_name)
-    print(initial_state)
+    print_state(initial_state)
 
     """
     Task 1.1 (Part II)

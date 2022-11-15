@@ -34,13 +34,13 @@ MAX_SAME_ITERATIONS = 2 * SGD_EPOCHS
 class ActorNetwork(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
         super(ActorNetwork, self).__init__()
-        # [Task 3] TODO: Write your code here to implement the type of layers that you will need in forward()
+        # [Task 2.3] TODO: Write your code here to implement the type of layers that you will need in forward()
         # [Your Code]
         pass
 
     def forward(self, input_):
         output = None
-        # [Task 3] TODO: Write your code here to implement the forward pass of the actor network
+        # [Task 2.3] TODO: Write your code here to implement the forward pass of the actor network
         # [Your Code]
         return output
 
@@ -48,13 +48,13 @@ class ActorNetwork(nn.Module):
 class CriticNetwork(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
         super(CriticNetwork, self).__init__()
-        # [Task 3] TODO: Write your code here to implement the type of layers that you will need in forward()
+        # [Task 2.3] TODO: Write your code here to implement the type of layers that you will need in forward()
         # [Your Code]
         pass
 
     def forward(self, input_):
         output = None
-        # [Task 3] TODO: Write your code here to implement the forward pass of the critic network
+        # [Task 2.3] TODO: Write your code here to implement the forward pass of the critic network
         # [Your Code]
         return output
 
@@ -259,7 +259,7 @@ class PPO:
 
                     loss = actor_loss + CRITIC_LOSS_DISCOUNT * critic_loss - ENTROPY_COEFFICIENT * entropy
 
-                    # [Task 3] TODO: Given loss, write you code here to update model parameters (backward propagation)
+                    # [Task 2.3] TODO: Given loss, write you code here to update model parameters (backward propagation)
                     # [Your Code]
 
                 if self.parameter_actor is None:
