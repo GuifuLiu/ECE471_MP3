@@ -57,8 +57,10 @@ def generate_traces(env, function_name):
         print('CPU Utilization: %f, SLO Preservation: %f' % (state[0], state[1]))
 
         # print to file
-        file.write(','.join([str(j) for j in state]) + ',' + str(random_policy['vertical']) + ',' + str(random_policy['horizontal']) +
-                   ',' + str(reward) + '\n')
+        file.write(','.join([str(j) for j in state]) + ',' + 
+                             str(random_policy['vertical']) + ',' + 
+                             str(random_policy['horizontal']) + ',' + 
+                             str(reward) + '\n')
         state = next_state
 
     file.close()

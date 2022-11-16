@@ -64,9 +64,8 @@ class CriticNetwork(nn.Module):
         hidden_layer = nn.Linear(HIDDEN_SIZE, hidden_size)
         output_layer = nn.Linear(hidden_size, output_size)
         function = nn.ReLU()
-        output_function = nn.Softmax()
 
-        self.neural_net = nn.Sequential(input_layer, function, hidden_layer, function, output_layer, output_function)
+        self.neural_net = nn.Sequential(input_layer, function, hidden_layer, function, output_layer)
         pass
 
     def forward(self, input_):
