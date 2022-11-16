@@ -277,7 +277,7 @@ class PPO:
 
                     # [Task 2.3] TODO: Given loss, write you code here to update model parameters (backward propagation)
                     # [Your Code]
-                    self.optimzier.zero_grad()
+                    self.optimizer.zero_grad()
                     loss.backward()
                     self.optimizer.step()
 
