@@ -44,7 +44,6 @@ class ActorNetwork(nn.Module):
         output_function = nn.Softmax()
 
         self.neural_net = nn.Sequential(input_layer, function, hidden_layer, function, output_layer, output_function)
-
         pass
 
     def forward(self, input_):
@@ -278,7 +277,10 @@ class PPO:
 
                     # [Task 2.3] TODO: Given loss, write you code here to update model parameters (backward propagation)
                     # [Your Code]
+                    self.optimzier.zero_grad()
                     loss.backward()
+                    self.optimizer.step()
+
 
                 if self.parameter_actor is None:
                     self.parameter_actor = []
