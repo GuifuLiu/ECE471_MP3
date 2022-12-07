@@ -1,3 +1,4 @@
+from util import *
 import random
 from serverless_env import SimEnvironment
 from pg import pg
@@ -66,6 +67,71 @@ def generate_traces(env, function_name):
     file.close()
     print('Trajectory generated!')
 
+#add and complete the following function for Task 4.3:
+def generate_traces_trained(env, function_name, agent, arrival_rate):
+
+    #your policy in 1.2
+    env.reset(function_name)
+    state = env.reset_arrival_rate(function_name,arrival_rate)
+
+    num_steps = 2000
+
+    file = open("traces_your_policy.csv", "w")
+    file.write('avg_cpu_util,slo_preservation,total_cpu_shares,cpu_shares_others,num_containers,arrival_rate,' +
+               'vertical_scaling,horizontal_action,reward\n')
+
+    total_reward = 0 
+    for i in range(num_steps):
+        
+        # [Task 4.3] TODO:here use the same code you use for Task 1.2
+        # [Your Code]
+
+
+
+
+        total_reward += reward
+        # print to file
+        file.write(','.join([str(j) for j in state]) + ',' + str(vertical_action) + ',' + str(horizontal_action) +
+                   ',' + str(reward) + '\n')
+        state = next_state
+
+    file.write('total_reward: ' + str(total_reward))
+
+    print("your policy total reward: ", total_reward)
+    file.close()
+
+
+    #RL  policy  
+    #env.reset(function_name)
+    #state = env.reset_arrival_rate(function_name,arrival_rate)[:NUM_STATES]
+    state = state[:NUM_STATES]
+
+    file = open("traces_RL.csv", "w")
+    file.write('avg_cpu_util,slo_preservation,total_cpu_shares,cpu_shares_others,num_containers,arrival_rate,' +
+               'vertical_scaling,horizontal_action,reward\n')
+    
+    total_reward = 0 
+
+    for i in range(num_steps):
+
+        # [Task 4.3] TODO:here use the trained RL agent to generate the action for each step
+        # hint: check calc_action in class PPO
+        # [Your Code]
+
+
+        total_reward += reward
+
+        # print to file
+        file.write(','.join([str(j) for j in state]) + ',' + str(action_to_execute['vertical']) + ',' + str(action_to_execute['horizontal']) +
+                   ',' + str(reward) + '\n')
+        state = next_state
+        
+    file.write('total_reward: ' + str(total_reward))
+
+    print("RL policy total reward: ", total_reward)
+
+    file.close()
+    print('Trajectory generated!')
 
 def test_reward_function():
     action = {
@@ -191,8 +257,13 @@ def main():
         agent.load_checkpoint(checkpoint_file)
         print('>>>>>>>>>> End of Task 4 <<<<<<<<<<\n')
 
+    # part 3 manually fixing arrival rate for training
+    env.reset_arrival_rate(function_name,7)
+
     # start RL training
     agent.train()
+
+    generate_traces_trained(env, function_name, agent, arrival_rate)
 
 
 if __name__ == "__main__":

@@ -88,8 +88,8 @@ def calc_gae(rewards):
     return returns
 
 
-def visualization(iteration_rewards, smoothed_rewards):
-    # [Task 4.1] TODO: Write your code here to visualize the reward progression (learning curve) of the RL agent
+def visualization(iteration_rewards, smoothed_rewards, smoothed_slo_preservations, smoothed_cpu_utils):
+    # [Task 4.1] TODO: Write your code here to visualize the reward progression (learning curve), slo preservation and cpu utilization of the RL agent
     # [Task 4.1] TODO: Save the figure to a local file
     # [Your Code]
     pass
