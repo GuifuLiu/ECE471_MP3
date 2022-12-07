@@ -99,7 +99,7 @@ def visualization(iteration_rewards, smoothed_rewards, smoothed_slo_preservation
     plt.plot(smoothed_cpu_utils, label = 'cpu_util')
     plt.xlabel('Iteration')
 
-    time = datetime.now()
+    time = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
     plt.savefig('visualization ' + time +'.png')
     pass
 
@@ -375,6 +375,10 @@ class PPO:
         # [Task 4.2] TODO: Write your code here to load the RL model from a local checkpoint
         # [Task 4.2] Hint: Check out torch.load() function documentation
         # [Your Code]
+
+        object_dict = torch.load(checkpoint_file_path)
+        self.actor = object_dict['actor']
+        self.critic = object_dict['critic']
         pass
 
     # save all model parameters to a checkpoint
@@ -382,4 +386,11 @@ class PPO:
         # [Task 4.2] TODO: Write your code here to save the RL model to a local checkpoint
         # [Task 4.2] Hint: Check out torch.save() function documentation
         # [Your Code]
+
+        # Saving the parameters of the actor and critic neural networks
+        actor_parameters = self.actor.parameters()
+        critic_parameters = self.critic.parameters()
+        object_dict = {'actor': actor_parameters, 'critic': critic_parameters}
+
+        torch.save(object_dict, './checkpoints/ppo-ep'+str(episode_num)+'.pth.tar')
         pass
