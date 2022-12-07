@@ -388,9 +388,9 @@ class PPO:
         # [Your Code]
 
         # Saving the parameters of the actor and critic neural networks
-        actor_parameters = self.actor.parameters()
-        critic_parameters = self.critic.parameters()
-        object_dict = {'actor': actor_parameters, 'critic': critic_parameters}
+        actor = self.actor
+        critic = self.critic
+        object_dict = {'actor': actor, 'critic': critic}
 
         torch.save(object_dict, './checkpoints/ppo-ep'+str(episode_num)+'.pth.tar')
         pass

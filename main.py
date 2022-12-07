@@ -86,7 +86,16 @@ def generate_traces_trained(env, function_name, agent, arrival_rate):
         # [Task 4.3] TODO:here use the same code you use for Task 1.2
         # [Your Code]
 
+        # Create random action policy for vertical or horizontal scaling
+        decrease = -1 if random.choice([True, False]) else 1
 
+        if random.choice([True, False]):
+          random_policy = {'vertical': 128 * decrease, 'horizontal': 0}
+        else:
+          random_policy = {'vertical': 0, 'horizontal': 1 * decrease}
+
+        # Performing the RL step
+        next_state, reward, done = env.step(function_name=function_name, action=random_policy)
 
 
         total_reward += reward
@@ -118,6 +127,9 @@ def generate_traces_trained(env, function_name, agent, arrival_rate):
         # hint: check calc_action in class PPO
         # [Your Code]
 
+        action = agent.calc_action(state)
+        # Performing the RL step
+        next_state, reward, done = env.step(function_name=function_name, action=action)
 
         total_reward += reward
 
