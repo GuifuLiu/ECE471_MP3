@@ -257,7 +257,7 @@ def main():
         agent.load_checkpoint(checkpoint_file)
         print('>>>>>>>>>> End of Task 4 <<<<<<<<<<\n')
 
-    # part 3 manually fixing arrival rate for training
+    # CP2 manually fixing arrival rate for training
     env.reset_arrival_rate(function_name,7)
 
     # start RL training

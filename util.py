@@ -83,22 +83,55 @@ def convert_state_action_to_reward(state, action, last_action, arrival_rate):
     # [Task 3.3] TODO: Implement a reward function that achieves a balance between performance and utilization
     # [Task 3.4] TODO: Add punishment to the reward which helps avoid undesired or illegal actions
     # [Your Code]
-    reward = 0
+    
+    cpu_util = state[0]
+    slo_preservation = state[1]
+    cpu_shares = state[2]
+    num_containers = state[4]
+    reward = (cpu_util + slo_preservation) / 2
 
-    return reward
+    # Undesirable action: scale up/down then scale down/up
+    if last_action['vertical'] > 0 and action['vertical'] < 0:
+        reward -= 0.25
+    elif last_action['vertical'] < 0 and action['vertical'] > 0:
+        reward -= 0.25
+
+    # Illegal action: remove non-existant container
+    if num_containers == 0 and action['horizontal'] == -1:
+        reward = 0
+
+    # Illegal action: create too many containers
+    if MAX_NUM_CONTAINERS < num_containers + action['horizontal']:
+        reward = 0
+
+    # Illegal action: remove non-existant cpu shares
+    if cpu_shares + action['vertical'] < 0:
+        reward = 0
+
+    # Illegal action: create too many cpu shares
+    if MAX_CPU_SHARES < cpu_shares + action['vertical']:
+        reward = 0
+
+    return max(reward, 0)
 
 
 def convert_state_action_to_reward_overprovisioning(state, action, last_action, arrival_rate):
     # [Task 3.1] TODO: Implement a reward function that overprovision resources to achieve good performance
     # [Your Code]
-    reward = 0
+
+    slo_preservation = state[1]
+    reward = slo_preservation
+
     return reward
 
 
 def convert_state_action_to_reward_tightpacking(state, action, last_action, arrival_rate):
     # [Task 3.2] TODO: Implement a reward function that underprovision resources to save utilization
     # [Your Code]
-    reward = 0
+
+    cpu_util = state[0]
+    reward = cpu_util
+
     return reward
 
 

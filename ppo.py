@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 import psutil
 import torch
@@ -92,6 +93,14 @@ def visualization(iteration_rewards, smoothed_rewards, smoothed_slo_preservation
     # [Task 4.1] TODO: Write your code here to visualize the reward progression (learning curve), slo preservation and cpu utilization of the RL agent
     # [Task 4.1] TODO: Save the figure to a local file
     # [Your Code]
+
+    plt.plot(smoothed_rewards, label='reward')
+    plt.plot(smoothed_slo_preservations, label='slo_preservation')
+    plt.plot(smoothed_cpu_utils, label = 'cpu_util')
+    plt.xlabel('Iteration')
+
+    time = datetime.now()
+    plt.savefig('visualization ' + time +'.png')
     pass
 
 
