@@ -99,12 +99,21 @@ def visualization(iteration_rewards, smoothed_rewards, smoothed_slo_preservation
     # [Task 4.1] TODO: Save the figure to a local file
     # [Your Code]
 
-    plt.plot(smoothed_rewards, label='reward')
-    plt.plot(smoothed_slo_preservations, label='slo_preservation')
-    plt.plot(smoothed_cpu_utils, label = 'cpu_util')
-    plt.xlabel('Iteration')
-    plt.legend(loc='upper right')
+    # Creating the first axis for rewards
+    fig, ax1 = plt.subplots()
+    ax1.set_xlabel('Iteration')
+    ax1.set_ylabel('Reward')
+    ax1.plot(smoothed_rewards, label='reward')
 
+    # Creating second axis for slo_preservation and cpu_util
+    ax2 = ax1.twinx() 
+    ax2.set_ylabel('SLO Preservation / CPU Utilization')
+    ax2.plot(smoothed_slo_preservations, label='slo_preservation', color='green')
+    ax2.plot(smoothed_cpu_utils, label='cpu_util', color='orange')
+
+    fig.legend(loc='upper right')
+
+    # Getting timestamp and writing to file
     time = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
     plt.savefig('visualization ' + time +'.png')
     pass

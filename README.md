@@ -29,3 +29,15 @@ Task 3.3 was implemented in convert_state_action_to_reward() in util.py. The rew
 ## Task 3.4
 
 Task 3.4 is also implemented in convert_state_action_to_reward() in util.py. The undesirable action of scaling up then scaling down or vice versa is avoided by decreasing the reward when it occurs. The illegal actions of removing non-existant cpu shares/containers and creating too many cpu shares/containers are avoided by giving the actions 0 reward.
+
+## Task 4.1
+
+Task 4.1 is implemented in visualization() in ppo.py. PyPlot is used to visualize the reward function plotted against the SLO Preservation and CPU Utilization for each iteration. The datetime library is used to timestamp a file name and the visualization is written to a .png file.
+
+## Task 4.2
+
+load_checkpoint() and save_checkpoint() in ppo.py allow for the saving and loading of the actor and critic neural nets after they have been trained. This was done by daving the pytorch objects to a .tar file.
+
+## Task 4.3
+
+Task 4.3 was implemented in the generate_traces_trained() function in main.py. The initial policy from task 1.2 was added to find the total reward for 2000 steps. The trained RL agent was then used to generate actions and calculate the total reward for 2000 steps by calling agent.calc_action().
