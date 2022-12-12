@@ -339,7 +339,7 @@ class PPO:
 
         # plot
         if PLOT_FIG:
-            visualization(iteration_rewards, smoothed_rewards)
+            visualization(iteration_rewards, smoothed_rewards, smoothed_slo_preservations, smoothed_cpu_utils)
 
         # write rewards to file
         if SAVE_TO_FILE:

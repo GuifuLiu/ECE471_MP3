@@ -94,6 +94,9 @@ def generate_traces_trained(env, function_name, agent, arrival_rate):
         else:
           random_policy = {'vertical': 0, 'horizontal': 1 * decrease}
 
+        vertical_action = random_policy['vertical']
+        horizontal_action = random_policy['horizontal']
+
         # Performing the RL step
         next_state, reward, done = env.step(function_name=function_name, action=random_policy)
 
@@ -127,9 +130,31 @@ def generate_traces_trained(env, function_name, agent, arrival_rate):
         # hint: check calc_action in class PPO
         # [Your Code]
 
-        action = agent.calc_action(state)
+        state = state[:NUM_STATES]
+        action, log_prob = agent.calc_action(state)
+        action_to_execute = {
+            'vertical': 0,
+            'horizontal': 0,
+        }
+
+        if action == 0:
+            # do nothing
+            pass
+        elif action == 1:
+            # scaling out
+            action_to_execute['horizontal'] = HORIZONTAL_SCALING_STEP
+        elif action == 2:
+            # scaling in
+            action_to_execute['horizontal'] = -HORIZONTAL_SCALING_STEP
+        elif action == 3:
+            # scaling up
+            action_to_execute['vertical'] = VERTICAL_SCALING_STEP
+        elif action == 4:
+            # scaling down
+            action_to_execute['vertical'] = -VERTICAL_SCALING_STEP
+
         # Performing the RL step
-        next_state, reward, done = env.step(function_name=function_name, action=action)
+        next_state, reward, done = env.step(function_name=function_name, action=action_to_execute)
 
         total_reward += reward
 
@@ -275,6 +300,7 @@ def main():
     # start RL training
     agent.train()
 
+    arrival_rate = 7
     generate_traces_trained(env, function_name, agent, arrival_rate)
 
 
