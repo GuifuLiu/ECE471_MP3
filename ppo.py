@@ -38,12 +38,14 @@ class ActorNetwork(nn.Module):
         # [Task 2.3] TODO: Write your code here to implement the type of layers that you will need in forward()
         # [Your Code]
 
+        # Specifying layers and activation functions for 3-layer NN
         input_layer = nn.Linear(input_size, HIDDEN_SIZE)
         hidden_layer = nn.Linear(HIDDEN_SIZE, hidden_size)
         output_layer = nn.Linear(hidden_size, output_size)
         function = nn.ReLU()
         output_function = nn.Softmax()
 
+        # Creating NN
         self.neural_net = nn.Sequential(input_layer, function, hidden_layer, function, output_layer, output_function)
         pass
 
@@ -60,11 +62,14 @@ class CriticNetwork(nn.Module):
         super(CriticNetwork, self).__init__()
         # [Task 2.3] TODO: Write your code here to implement the type of layers that you will need in forward()
         # [Your Code]
+
+        # Specifying layers and activation functions for 3-layer NN
         input_layer = nn.Linear(input_size, HIDDEN_SIZE)
         hidden_layer = nn.Linear(HIDDEN_SIZE, hidden_size)
         output_layer = nn.Linear(hidden_size, output_size)
         function = nn.ReLU()
 
+        # Creating NN
         self.neural_net = nn.Sequential(input_layer, function, hidden_layer, function, output_layer)
         pass
 
@@ -287,8 +292,12 @@ class PPO:
 
                     # [Task 2.3] TODO: Given loss, write you code here to update model parameters (backward propagation)
                     # [Your Code]
+
+                    # Setting the gradients of optimized pytorch tensors to 0
                     self.optimizer.zero_grad()
+                    # Performs backwards propogation of loss with respect to tensor parameters
                     loss.backward()
+                    # Performs another step / update in the optimizer for the NN
                     self.optimizer.step()
 
 

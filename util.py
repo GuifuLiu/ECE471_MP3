@@ -88,7 +88,13 @@ def convert_state_action_to_reward(state, action, last_action, arrival_rate):
     slo_preservation = state[1]
     cpu_shares = state[2]
     num_containers = state[4]
+    arrival_rate_change = state[5]
     reward = (cpu_util + slo_preservation) / 2
+
+    # Desirable action: adapting to increasing arrival rate
+    if arrival_rate_change > 0:
+        if action['vertical'] > 0 or action['vertical'] > 0:
+            reward += 0.25 * arrival_rate_change
 
     # Undesirable action: scale up/down then scale down/up
     if last_action['vertical'] > 0 and action['vertical'] < 0:
@@ -112,7 +118,8 @@ def convert_state_action_to_reward(state, action, last_action, arrival_rate):
     if MAX_CPU_SHARES < cpu_shares + action['vertical']:
         reward = 0
 
-    return max(reward, 0)
+    # Ensuring the reward falls between 0 and 1
+    return min(max(reward, 0), 1)
 
 
 def convert_state_action_to_reward_overprovisioning(state, action, last_action, arrival_rate):
