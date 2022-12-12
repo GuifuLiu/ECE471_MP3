@@ -89,7 +89,7 @@ def convert_state_action_to_reward(state, action, last_action, arrival_rate):
     cpu_shares = state[2]
     num_containers = state[4]
     arrival_rate_change = state[5]
-    reward = (cpu_util + slo_preservation) / 2
+    reward = (cpu_util + slo_preservation) - num_containers
 
     # Desirable action: adapting to increasing arrival rate
     if arrival_rate_change > 0:
