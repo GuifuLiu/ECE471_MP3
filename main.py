@@ -300,8 +300,7 @@ def main():
     # start RL training
     agent.train()
 
-    arrival_rate = 7
-    generate_traces_trained(env, function_name, agent, arrival_rate)
+    generate_traces_trained(env, function_name, agent, env.arrival_rate)
 
 
 if __name__ == "__main__":

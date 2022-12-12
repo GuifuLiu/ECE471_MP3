@@ -98,6 +98,7 @@ def visualization(iteration_rewards, smoothed_rewards, smoothed_slo_preservation
     plt.plot(smoothed_slo_preservations, label='slo_preservation')
     plt.plot(smoothed_cpu_utils, label = 'cpu_util')
     plt.xlabel('Iteration')
+    plt.legend(loc='upper right')
 
     time = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
     plt.savefig('visualization ' + time +'.png')
