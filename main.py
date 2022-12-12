@@ -288,7 +288,7 @@ def main():
     - Complete the visualization() function for RL training visualization
     """
     # init from saved checkpoints
-    use_checkpoint = True
+    use_checkpoint = False
     checkpoint_file = './checkpoints/ppo-ep0.pth.tar'
     if use_checkpoint:
         agent.load_checkpoint(checkpoint_file)
